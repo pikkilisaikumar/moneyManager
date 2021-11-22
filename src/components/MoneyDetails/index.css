@@ -1,0 +1,22 @@
+.overallmoneydetailscontainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Yourbalancecontainer {
+  background-color: #ecfccb;
+  border: 2px solid #ecfccb;
+  padding: 20px;
+  margin: 20px;
+  width: 250px;
+  border-radius: 15px;
+  display: flex;
+}
+.balanceimage {
+  height: 60px;
+  width: 60px;
+  margin-top: 15px;
+}
+.yourbalanceandrs {
+  padding-left: 14px;
+}

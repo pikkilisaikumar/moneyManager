@@ -1,0 +1,18 @@
+.list-items {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid black;
+}
+.deleteimageone {
+  height: 20px;
+  width: 20px;
+}
+.deletebutton {
+  background-color: transparent;
+  border-width: 0px;
+  margin-top: 4px;
+}
+.titleparagraph {
+  padding-right: 10px;
+}
