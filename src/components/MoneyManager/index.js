@@ -39,11 +39,14 @@ class MoneyManager extends Component {
   onSubmitEventTriggred = event => {
     event.preventDefault()
     const {title, amount, Type} = this.state
+    const findOne = transactionTypeOptions.find(each => each.optionId === Type)
+    const {displayText} = findOne
+
     const listNew = {
       id: uuidv4(),
       titleone: title,
       Amountone: amount,
-      TypeOne: Type,
+      TypeOne: displayText,
     }
     console.log(listNew)
     this.setState(prevState => ({
@@ -70,7 +73,7 @@ class MoneyManager extends Component {
     const {listType} = this.state
     let income = 0
     listType.forEach(each => {
-      if (each.TypeOne === transactionTypeOptions[0].optionId) {
+      if (each.TypeOne === transactionTypeOptions[0].displayText) {
         income += parseInt(each.Amountone)
       }
     })
@@ -81,7 +84,7 @@ class MoneyManager extends Component {
     const {listType} = this.state
     let expenses = 0
     listType.forEach(each => {
-      if (each.TypeOne === transactionTypeOptions[1].optionId) {
+      if (each.TypeOne === transactionTypeOptions[1].displayText) {
         expenses += parseInt(each.Amountone)
       }
     })
@@ -94,7 +97,7 @@ class MoneyManager extends Component {
     let expenses = 0
     let total = 0
     listType.forEach(each => {
-      if (each.TypeOne === transactionTypeOptions[0].optionId) {
+      if (each.TypeOne === transactionTypeOptions[0].displayText) {
         income += parseInt(each.Amountone)
       } else {
         expenses += parseInt(each.Amountone)
@@ -105,22 +108,6 @@ class MoneyManager extends Component {
     return total
   }
 
-  //   getTotalAmount = () => {
-  //     const {listType} = this.state
-  //     let totalAmount = 0
-  //     const incomeAmount = 0
-  //     const expensesAmount = 0
-  //     totalAmount = incomeAmount - expensesAmount
-  //     return totalAmount
-  //     // for (let each of listType) {
-  //     //   if (each.TypeOne === transactionTypeOptions[0].optionId) {
-  //     //     incomeAmount += parseInt(each.Amountone)
-  //     //   } else {
-  //     //     expensesAmount += parseInt(each.Amountone)
-  //     //   }
-  //     // }
-  //   }
-
   onDeleteOneImg = id => {
     const {listType} = this.state
     const dataOne = listType.filter(eachOne => eachOne.id !== id)
@@ -130,20 +117,17 @@ class MoneyManager extends Component {
   render() {
     const {listType, Type, amount, title} = this.state
 
-    const incomeamount = this.getIncomeAmount()
-    const expensesAmount = this.getExpensesAmount()
-    const totalAmount = this.getTotalAmount()
+    const Balance = this.getTotalAmount()
+    const Income = this.getIncomeAmount()
+    const Expenses = this.getExpensesAmount()
+
     return (
       <div className="background">
         <div className="firstcontainer">
           <h1>Hi,Richards</h1>
           <p>Welcome back to your Money Manager</p>
         </div>
-        <MoneyDetails
-          totalAmount={totalAmount}
-          incomeamount={incomeamount}
-          expensesAmount={expensesAmount}
-        />
+        <MoneyDetails Balance={Balance} Income={Income} Expenses={Expenses} />
         <div className="lastcontainerone">
           <div className="addtransactioncontainer">
             <h1 className="addtransactionheading">Add Transaction</h1>
@@ -171,7 +155,11 @@ class MoneyManager extends Component {
               <div className="amountcontainer">
                 <label htmlFor="type">TYPE</label>
                 <br />
-                <select id="type" onChange={this.onChangeSelectElement}>
+                <select
+                  id="type"
+                  onChange={this.onChangeSelectElement}
+                  value={Type}
+                >
                   {transactionTypeOptions.map(each => (
                     <option value={each.optionId} key={each.optionId}>
                       {each.displayText}
